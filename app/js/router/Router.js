@@ -16,6 +16,9 @@ var DefaultLayout = require('../DefaultLayout.jsx');
   };
 
 
-  page('/' , function(context){
-    //Todo
+  Page('/' , function(context){
+    render({pageName: "Index"});
   });
+
+
+  Page();
