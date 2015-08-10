@@ -33,10 +33,6 @@ var IxInternetPortal = {
             {
                 test: /\.jsx?$/,
                 loader: 'jsx-loader'
-            },
-            {
-                test: /\.json$/,
-                loader: 'file?name=../[name].[ext]'
             }
         ]
     },
