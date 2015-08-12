@@ -1,10 +1,14 @@
+/**
+ * @jsx React.DOM
+ */
 
+'use strict';
 
 var React = require('react');
 
 var DefaultLayout = React.createClass({
   componentDidMount: function() {
-    console.log("mounted");
+    
   },
 
   render: function() {
@@ -12,7 +16,7 @@ var DefaultLayout = React.createClass({
     var RenderPage = require('./pages/' + pageName + ".jsx");
     return (
       <div className="layout">
-        <RenderPage />
+        <RenderPage info={this.props.info}/>
       </div>
     );
   }

@@ -5,8 +5,12 @@ var app = Express();
 app.use(Express.static('build'));
 
 app.get('/*' , function(req, res){
-  res.sendFile(path.join(__dirname, './build', 'index.html'));
+  var file = path.join(__dirname, '/build', 'index.html');
+  console.log(res);
+  res.sendFile(file);
+
 });
+
 
 
 
