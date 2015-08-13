@@ -5,6 +5,7 @@
 'use strict';
 
 var React = require('react');
+var Header = require('./components/Header.jsx');
 
 var DefaultLayout = React.createClass({
   componentDidMount: function() {
@@ -14,9 +15,13 @@ var DefaultLayout = React.createClass({
   render: function() {
     var pageName = this.props.info.pageName;
     var RenderPage = require('./pages/' + pageName + ".jsx");
+    var selectedPage = this.props.info.pageName.toLowerCase();
     return (
       <div className="layout">
-        <RenderPage info={this.props.info}/>
+      <div className="content-body">
+        <Header highlight={selectedPage}/>
+          <RenderPage details={this.props.info}/>
+        </div>
       </div>
     );
   }

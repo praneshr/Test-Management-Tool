@@ -6,9 +6,7 @@ app.use(Express.static('build'));
 
 app.get('/*' , function(req, res){
   var file = path.join(__dirname, '/build', 'index.html');
-  console.log(res);
   res.sendFile(file);
-
 });
 
 

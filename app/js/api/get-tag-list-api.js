@@ -16,11 +16,12 @@ module.exports = {
         "failed",
         "u_embar",
         "p_apimanagement",
-        "f_planmanagement"
+        "f_planmanagement",
+        "Pranesh"
       ]
     };
     setTimeout(function(){
       getTagListActions.getTagList(data);
-    },3000);
+    },4000);
   }
 };

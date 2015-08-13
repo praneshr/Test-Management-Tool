@@ -3,3 +3,17 @@
 @import '../../node_modules/frame-ui/css/sass/_variables.scss';
 @import '../../node_modules/frame-ui/css/sass/_render-engine.scss';
 @import '../../node_modules/frame-ui/css/sass/frame.scss';
+
+@import './components/header.scss';
+@import './components/loader.scss';
+
+@import './pages/view.scss';
+
+.frame{
+  #app{
+    .content-body{
+      margin-top: 100px;
+      position: relative;
+    }
+  }
+}

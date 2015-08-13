@@ -1,0 +1,23 @@
+.header{
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: $white;
+  border-bottom: 1px solid $grey300;
+  .frame{
+    padding-top: 30px;
+    a{
+      font-size: 16px;
+      text-decoration: none;
+      color: $grey800;
+      margin-right: 30px;
+      padding: 0px 5px 9px;
+      &.highlight{
+        border-bottom: 1px solid $purple600;
+      }
+    }
+  }
+}

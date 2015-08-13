@@ -5,6 +5,9 @@
 'use strict';
 
 var React = require('react');
+var Loader = require('../components/Loader.jsx');
+
+
 var TagApi = require('../api/get-tag-list-api');
 var TagStore = require('../stores/get-tag-list-store');
 
@@ -38,21 +41,24 @@ var View = React.createClass({
       testCaseListLoading: false 
     });
   },
+  componentWillUnmount: function() {
+    // debugger;
+    delete this.state;
+  },
   renderCase: function(testcase,i){
-    return <div className="row" key={i}>
-            <div className="lr-12 sm-12 md-12"><p>{testcase.testId}</p></div>
-            <div className="lr-12 sm-12 md-12"><p>{testcase.testTitle}</p></div>
-            <div className="lr-12 sm-12 md-12"><p>{testcase.testDescription}</p></div>
-            <div className="lr-12 sm-12 md-12"><p>{testcase.tags}</p></div>
+    return <div className="row test-case" key={i}>
+            <div className="lr-12 sm-12 md-12 id">{testcase.testId}</div>
+            <div className="lr-12 sm-12 md-12 title">{testcase.testTitle}</div>
+            <div className="lr-12 sm-12 md-12 description">{testcase.testDescription}</div>
+            <div className="lr-12 sm-12 md-12 tags">{testcase.tags}</div>
           </div>;
   },
 
   render: function() {
     if(this.state.tagListLoading || this.state.testCaseListLoading)
-      return <div>Loading</div>
-    var _this = this
-    var hash = window.location.hash;
-    var filter = hash.split('#')[1];
+      return <Loader />
+    var _this = this;
+    var filter = this.props.details.info.filter.toLowerCase();
     var tagListResponse = TagStore.getTagList();
     var caseListResponse = TestCaseListStore.getTestCaseList();
     var tagList = [];
@@ -71,24 +77,31 @@ var View = React.createClass({
       });
       caseListResponse.testcases.map(function(testcase, i){
         var flag = filteredCase.indexOf(i);
-        if (flag !== -1) {
+        if (flag !== -1) 
           caseList.push(_this.renderCase(testcase,i));
-        };
       });
     }
-    tagList.push(<a href={"/view#all"}>All</a>);
+    tagList.push(<a href={"/view/all"}>All</a>);
     tagListResponse.tags.map(function(tag, i){
       tagList.push(
-        <a href={"/view#"+tag.toLowerCase()}>{tag}</a>
+        <a key={i} href={"/view/"+tag.toLowerCase()}>{tag}</a>
         )
     });
     <div className="row testcase">
     </div>
+    if(caseList.length === 0)
+          caseList.push(<div className="no-match"><span>No match found...</span></div>);
+
     return (
       <div className="view">
         {caseList}
         <div className="tag-list">
-          {tagList}
+          <div className="heading">
+            <span>Filter by tags</span>
+          </div>
+          <div className="content">
+            {tagList}
+          </div>
         </div>
       </div>
     );
