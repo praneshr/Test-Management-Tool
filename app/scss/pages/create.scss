@@ -1,4 +1,9 @@
 .create{
+  h1{
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 100;
+    padding: 20px 0px
+  }
   p{
     margin-top: 30px;
   }
@@ -8,7 +13,7 @@
     #loading{
       text-align: center;
       padding: 10px;
-      animation: fade 1s linear infinite;
+      animation: fade 1.5s linear infinite;
     }
     .tags{
       margin-right: 10px;
@@ -19,6 +24,7 @@
       display: inline-block;
       transition: all .1s linear;
       cursor: pointer;
+      &:hover,
       &.selected{
         color: $primary;
         border: none;
@@ -30,6 +36,11 @@
     float: right;
     background: $primary;
     margin: 0;
+  }
+  #reset{
+    float: right;
+    padding: 10px;
+    margin-right: 10px;
   }
 }
 @keyframes fade{

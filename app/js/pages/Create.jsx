@@ -60,15 +60,14 @@ var Create = React.createClass({
     var tagList = [];
     var _this = this;
     if(!this.state.tagsLoading){
-      console.log('done')
       var tagArray = TagStore.getTagList();
       tagArray.tags.map(function(tag, i) {
-          tagList.push(<span className="tags" onClick={_this.tagClicked} value={tag}>{tag}</span>);
+          tagList.push(<span className="tags" key={i} onClick={_this.tagClicked} value={tag}>{tag}</span>);
       });
     }
     return(
       <div className="create">
-        <h3>Create a new Test case</h3>
+        <h1><i className="material-icons add">add</i> New Test Case</h1>
         <p>Name</p>
         <input data-type="input" type="text" onChange={this.onInputChange} value={this.state.title}/>
         <p>Description</p>
@@ -76,10 +75,10 @@ var Create = React.createClass({
         <p>{this.state.selectedTags.length ? 'Tagged with (' + this.state.selectedTags.length +')' : 'Tag with'}</p>
         <div className="tag-list">
           {
-            (this.state.tagsLoading) ? <span><Loader /><div id='loading'>Loading...</div></span> : {tagList}
+            (this.state.tagsLoading) ? <span><Loader /><div id='loading'>Fetching tag list...</div></span> : <span>{tagList}</span>
           }
         </div>
-        <button onClick={this.handleSubmit} className="submit">Add</button>
+        <button onClick={this.handleSubmit} className="submit">+ Add</button>
       </div>
     );
   }

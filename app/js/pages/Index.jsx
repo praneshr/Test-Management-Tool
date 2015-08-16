@@ -3,7 +3,7 @@ var React = require('react');
 var Index = React.createClass({
   getInitialState: function() {
     return {
-      project: 'project 1' 
+      project: 'All Projects' 
     };
   },
   openHiddenDropdown: function(event){
@@ -35,7 +35,9 @@ var Index = React.createClass({
     var blocker = 5;
     return (
       <div className="main">
+      <div className="bgi">
         <h1>Well, Hello There!</h1>
+      </div>
         <div className="analytics">
           <div className="select-wrapper" onClick={this.openHiddenDropdown}>
             <span>{this.state.project}</span>
@@ -52,8 +54,42 @@ var Index = React.createClass({
             </select>
           </div>
           <div className="stats">
-            
+            <div className="row">
+              <div className="lr-12 md-12 sm-12 outer bottom-border">
+                <div className="body">
+                  <p className="title">Total test cases</p>
+                  <p className="number">{totalTC}</p>
+                </div>
+              </div>
+            </div>
+            <div className="row row-2">
+              <div className="lr-3 md-3 sm-3 outer same-row">
+                <div className="body">
+                  <p className="title">Passed</p>
+                  <p className="number">{passed}</p>
+                </div>
+              </div>
+              <div className="lr-3 md-3 sm-3 outer same-row">
+                <div className="body">
+                  <p className="title">Not-run</p>
+                  <p className="number">{notRun}</p>
+                </div>
+              </div>
+              <div className="lr-3 md-3 sm-3 outer same-row">
+                <div className="body">
+                  <p className="title">Failed</p>
+                  <p className="number">{failed}</p>
+                </div>
+              </div>
+              <div className="lr-3 md-3 sm-3 outer same-row">
+                <div className="body">
+                  <p className="title">Blocker</p>
+                  <p className="number">{blocker}</p>
+                </div>
+              </div>
+            </div>
           </div>
+          <p id="info">*click on the dropdown button to see the project list</p>
         </div>
       </div>
     );
