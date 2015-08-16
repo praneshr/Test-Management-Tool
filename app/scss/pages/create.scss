@@ -1,0 +1,45 @@
+.create{
+  p{
+    margin-top: 30px;
+  }
+  .tag-list{
+    margin-bottom: 50px;
+    min-height: 100px;
+    #loading{
+      text-align: center;
+      padding: 10px;
+      animation: fade 1s linear infinite;
+    }
+    .tags{
+      margin-right: 10px;
+      padding: 5px 10px;
+      border: 1px solid $grey300;
+      border-radius: 4px;
+      margin-top: 10px;
+      display: inline-block;
+      transition: all .1s linear;
+      cursor: pointer;
+      &.selected{
+        color: $primary;
+        border: none;
+        border: 1px solid $primary;
+      }
+    }
+  }
+  .submit{
+    float: right;
+    background: $primary;
+    margin: 0;
+  }
+}
+@keyframes fade{
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}

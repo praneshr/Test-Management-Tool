@@ -32,7 +32,7 @@ var IxInternetPortal = {
             },
             {
                 test: /\.jsx?$/,
-                loader: 'jsx-loader?jsx-loader?insertPragma=React.DOM&harmony'
+                loader: 'jsx-loader?insertPragma=React.DOM&harmony'
             }
         ]
     },

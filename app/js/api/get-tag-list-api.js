@@ -17,7 +17,7 @@ module.exports = {
         "u_embar",
         "p_apimanagement",
         "f_planmanagement",
-        "Pranesh"
+        "pranesh"
       ]
     };
     setTimeout(function(){

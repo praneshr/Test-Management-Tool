@@ -15,9 +15,35 @@
       color: $grey800;
       margin-right: 30px;
       padding: 0px 5px 9px;
+      transition: all .3s ease;
+      transition: color .1s linear;
       &.highlight{
-        border-bottom: 1px solid $purple600;
+        color: $primary;
+      }
+      &:hover{
+        color: $primary;
       }
     }
+    .create{
+      float: right;
+      margin-right: 0;
+      .add{
+        vertical-align: middle;
+        margin-right: 5px;
+        font-size: 21px;
+      }
+      span{
+        vertical-align: middle;
+      }
+    }
+  }
+  .line{
+    position: fixed;
+    top: 60px;
+    height: 1px;
+    left:0;
+    width: 0;
+    background-color: $primary;
+    transition: all .5s cubic-bezier(.55,0,.1,1);
   }
 }

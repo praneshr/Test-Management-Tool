@@ -23,7 +23,8 @@ module.exports = {
             "failed",
             "u_embar",
             "p_apimanagement",
-            "f_planmanagement"
+            "f_planmanagement",
+            "pranesh"
           ]
         },
         {
@@ -75,6 +76,7 @@ module.exports = {
           "jiraBugId": "Bugid1",
           "tags": [
             "notrun",
+            "pranesh"
           ]
         },
         {

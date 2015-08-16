@@ -14,6 +14,8 @@ var TagStore = require('../stores/get-tag-list-store');
 var TestCaseListApi = require('../api/get-test-case-api');
 var TestCaseListStore = require('../stores/get-test-case-list-store');
 
+var $ = require('jquery');
+
 var View = React.createClass({
   getInitialState: function() {
     return {
@@ -22,33 +24,46 @@ var View = React.createClass({
     };
   },
   componentDidMount: function() {
+    
     TagStore.addChangeListener(this.onTagList);
     TestCaseListStore.addChangeListener(this.onTestCaseList);
     TagApi.getTagList();
     TestCaseListApi.getTestCaseList();
   },
   componentDidUpdate: function(prevProps, prevState) {
+    var _this = this;
+    $(window).scroll(function(){
+      var sT = $('body').scrollTop();
+      if(sT > 60){
+        $('.holder').addClass('fixed');
+      }else{
+         $('.holder').removeClass('fixed');
+      }
+    });
 
+  },
+  onTagClick: function(event){
   },
   onTagList: function(){
-    this.setState({
-      tagListLoading: false 
-    });
+    if(this.isMounted())
+      this.setState({
+        tagListLoading: false 
+      });
   },
-
   onTestCaseList: function(){
-    this.setState({
-      testCaseListLoading: false 
-    });
+    if(this.isMounted())
+      this.setState({
+        testCaseListLoading: false 
+      });
   },
   componentWillUnmount: function() {
-    // debugger;
-    delete this.state;
   },
   renderCase: function(testcase,i){
     return <div className="row test-case" key={i}>
-            <div className="lr-12 sm-12 md-12 id">{testcase.testId}</div>
-            <div className="lr-12 sm-12 md-12 title">{testcase.testTitle}</div>
+            <a href={'/teat-case/'+testcase.testId}>
+              <div className="lr-12 sm-12 md-12 id">{testcase.testId}</div>
+              <div className="lr-12 sm-12 md-12 title">{testcase.testTitle}</div>
+            </a>
             <div className="lr-12 sm-12 md-12 description">{testcase.testDescription}</div>
             <div className="lr-12 sm-12 md-12 tags">{testcase.tags}</div>
           </div>;
@@ -84,8 +99,11 @@ var View = React.createClass({
     tagList.push(<a href={"/view/all"}>All</a>);
     tagListResponse.tags.map(function(tag, i){
       tagList.push(
-        <a key={i} href={"/view/"+tag.toLowerCase()}>{tag}</a>
+        <a key={i} onClick={_this.onTagClick} href={"/view/"+tag.toLowerCase()}>{tag.toLowerCase()}</a>
         )
+    });
+     tagList = tagList.sort(function(a,b){
+      return a.length - b.length
     });
     <div className="row testcase">
     </div>
@@ -93,14 +111,18 @@ var View = React.createClass({
           caseList.push(<div className="no-match"><span>No match found...</span></div>);
 
     return (
-      <div className="view">
-        {caseList}
-        <div className="tag-list">
-          <div className="heading">
-            <span>Filter by tags</span>
-          </div>
-          <div className="content">
-            {tagList}
+      <div className="row view">
+        <div className="lr-8 md-8 sm-12 same-row">
+          {caseList}
+        </div>
+        <div className="tag-list visible-on-medium-up lr-3 md-3 sm-12 same-row">
+          <div className="holder" ref="holder">
+            <div className="heading">
+              <span>Filter by tags</span>
+            </div>
+            <div className="content">
+              {tagList}
+            </div>
           </div>
         </div>
       </div>

@@ -29,7 +29,9 @@
     "underscore": "^1.8.3",
     "webpack": "^1.9.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "es6-loader": "^0.2.0"
+  },
   "bugs": {
     "url": "https://github.com/praneshr/Test-Management-Tool/issues"
   },
