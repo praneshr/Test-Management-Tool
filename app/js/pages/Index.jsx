@@ -1,10 +1,25 @@
 var React = require('react');
+var Loader = require('../components/Loader.jsx');
+
+var AnalyticsStore = require('../stores/get-analytics-store');
+var AnalyticsApi = require('../api/get-analytics-api');
+
+var TagApi = require('../api/get-tag-list-api');
+var TagStore = require('../stores/get-tag-list-store');
 
 var Index = React.createClass({
   getInitialState: function() {
     return {
-      project: 'All Projects' 
+      project: 'all',
+      projectLoading: true,
+      statsLoading: true
     };
+  },
+  componentDidMount: function() {
+    AnalyticsStore.addChangeListener(this.onAnalyticsData);
+    TagStore.addChangeListener(this.onTagList);
+    TagApi.getTagList();
+    AnalyticsApi.getAnalytics(this.state.project);
   },
   openHiddenDropdown: function(event){
     console.log('triggered');
@@ -22,20 +37,51 @@ var Index = React.createClass({
     }
   },
   onSelectChnage: function(event){
+    var data = event.target.value;
     this.setState({
-      project: event.target.value 
+      project: data
+    });
+    AnalyticsApi.getAnalytics(data);
+  },
+  onAnalyticsData: function(){
+    this.setState({
+      statsLoading: false
     });
   },
-
+  onTagList: function(){
+    this.setState({
+      projectLoading: false
+    });
+  },
   render: function() {
-    var totalTC = 117;
-    var passed = 96;
-    var failed = 4;
-    var notRun = 12;
-    var blocker = 5;
+    if(this.state.projectLoading)
+      return <Loader />
+    var random = Math.floor(Math.random() * 700);
+    var totalTC = 00;
+    var passed = 00;
+    var failed = 00;
+    var notRun = 00;
+    var percentage = '0%';
+    if(!this.state.statsLoading){
+      var stats = JSON.parse(AnalyticsStore.getAnalytics());
+      stats = stats.projects[0];
+      totalTC = stats.totalCases;
+      percentage = stats.passPercentage + '%';
+      notRun = stats.notrun;
+      passed = stats.passed;
+      failed = stats.failed;
+    }
+    var TagList = JSON.parse(TagStore.getTagList());
+    var options = [];
+    options.push(<option value="all">All Projects</option>);
+    TagList.tags.map(function(tag,i){
+      if(tag.indexOf('p_') === 0){
+        options.push(<option value={tag} key={i}>{tag}</option>);
+      }
+    });
     return (
       <div className="main">
-      <div className="bgi">
+      <div className="bgi" >
         <h1>Well, Hello There!</h1>
       </div>
         <div className="analytics">
@@ -45,12 +91,7 @@ var Index = React.createClass({
           </div>
           <div className="select-container">
             <select value={this.state.project} onChange={this.onSelectChnage} ref="select">
-              <option value="All Projects">All Projects</option>
-              <option value="project 1">Project 1</option>
-              <option value="project 2">Project 2</option>
-              <option value="project 3">Project 3</option>
-              <option value="project 4">Project 4</option>
-              <option value="project 5">Project 5</option>
+              {options}
             </select>
           </div>
           <div className="stats">
@@ -63,28 +104,22 @@ var Index = React.createClass({
               </div>
             </div>
             <div className="row row-2">
-              <div className="lr-3 md-3 sm-3 outer same-row">
+              <div className="lr-4 md-4 sm-4 outer same-row">
                 <div className="body">
                   <p className="title">Passed</p>
                   <p className="number">{passed}</p>
                 </div>
               </div>
-              <div className="lr-3 md-3 sm-3 outer same-row">
+              <div className="lr-4 md-4 sm-4 outer same-row">
                 <div className="body">
                   <p className="title">Not-run</p>
                   <p className="number">{notRun}</p>
                 </div>
               </div>
-              <div className="lr-3 md-3 sm-3 outer same-row">
+              <div className="lr-4 md-4 sm-4 outer same-row">
                 <div className="body">
                   <p className="title">Failed</p>
                   <p className="number">{failed}</p>
-                </div>
-              </div>
-              <div className="lr-3 md-3 sm-3 outer same-row">
-                <div className="body">
-                  <p className="title">Blocker</p>
-                  <p className="number">{blocker}</p>
                 </div>
               </div>
             </div>

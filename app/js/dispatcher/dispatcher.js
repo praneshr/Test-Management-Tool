@@ -14,6 +14,15 @@ var AppDispatcher = assign(new Flux.Dispatcher(), {
   },
   getTestCaseList: function(action){
     this.dispatch(action);
+  },
+  getProjectList: function(action){
+    this.dispatch(action);
+  },
+  getAnalytics: function(action){
+    this.dispatch(action);
+  },
+  createTestcase: function(action){
+    this.dispatch(action);
   }
 });
 

@@ -1,8 +1,13 @@
 var React = require('react/addons');
 var _ = require('underscore');
 var Loader = require('../components/Loader.jsx');
+var classnames = require('classnames');
+
 var TagApi = require('../api/get-tag-list-api');
 var TagStore = require('../stores/get-tag-list-store');
+
+var createTestCaseStore = require('../stores/create-testcase-store');
+var createTestApi = require('../api/create-testcase-api');
 
 var Create = React.createClass({
   getInitialState: function() {
@@ -10,17 +15,19 @@ var Create = React.createClass({
       tagsLoading: true,
       title: '',
       description: '',
-      selectedTags: [] 
+      selectedTags: [],
+      adding: false
     };
   },
   componentDidMount: function() {
     TagStore.addChangeListener(this.onTagList);
+    createTestCaseStore.addChangeListener(this.onAddSuccess);
     TagApi.getTagList();
   },
   onTagList: function(){
     this.isMounted() &&
     this.setState({
-      tagsLoading: false 
+      tagsLoading: false
     });
   },
   tagClicked: function(event){
@@ -42,7 +49,14 @@ var Create = React.createClass({
     }
   },
   handleSubmit: function(){
-    debugger;
+    data={};
+    data.title = this.state.title;
+    data.description = this.state.description;
+    data.tags = this.state.selectedTags;
+    createTestApi.createTestcase(data);
+    this.setState({
+      adding: true
+    });
   },
   onInputChange: function(event){
     var type = event.target.getAttribute('data-type');
@@ -53,20 +67,31 @@ var Create = React.createClass({
       });
     if(type === 'textarea')
       this.setState({
-        description: value 
+        description: value
       });
+  },
+  onAddSuccess: function(){
+    var newTag = createTestCaseStore.getNewTestcase();
+    alert(newTag);
+    this.setState({
+      adding: false,
+      title: '',
+      description: '',
+      selectedTags: [],
+    });
   },
   render: function() {
     var tagList = [];
     var _this = this;
     if(!this.state.tagsLoading){
-      var tagArray = TagStore.getTagList();
+      var tagArray = JSON.parse(TagStore.getTagList());
       tagArray.tags.map(function(tag, i) {
           tagList.push(<span className="tags" key={i} onClick={_this.tagClicked} value={tag}>{tag}</span>);
       });
     }
     return(
-      <div className="create">
+      <div className={classnames("create",{add:this.state.adding})}>
+        {this.state.adding && <Loader />}
         <h1><i className="material-icons add">add</i> New Test Case</h1>
         <p>Name</p>
         <input data-type="input" type="text" onChange={this.onInputChange} value={this.state.title}/>

@@ -9,19 +9,12 @@ var getTagListActions = require('../actions/get-tag-list-action');
 
 module.exports = {
   getTagList: function(){
-    var data =  {
-      "tags": [
-        "notrun",
-        "passed",
-        "failed",
-        "u_embar",
-        "p_apimanagement",
-        "f_planmanagement",
-        "pranesh"
-      ]
-    };
-    setTimeout(function(){
+    $.get('/tags')
+    .done(function(data){
       getTagListActions.getTagList(data);
-    },4000);
+    })
+    .error(function(data){
+      console.log(error);
+    })
   }
 };
