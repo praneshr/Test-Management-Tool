@@ -93,14 +93,19 @@ var Create = React.createClass({
       <div className={classnames("create",{add:this.state.adding})}>
         {this.state.adding && <Loader />}
         <h1><i className="material-icons add">add</i> New Test Case</h1>
-        <p>Name</p>
-        <input data-type="input" type="text" onChange={this.onInputChange} value={this.state.title}/>
+        <p>Title</p>
+        <input data-type="input" type="text" onChange={this.onInputChange} value={this.state.title} placeholder="Give a title..."/>
         <p>Description</p>
-        <textarea data-type="textarea"  onChange={this.onInputChange} value={this.state.description}/>
+        <textarea data-type="textarea"  onChange={this.onInputChange} value={this.state.description} placeholder="Clean description..."/>
         <p>{this.state.selectedTags.length ? 'Tagged with (' + this.state.selectedTags.length +')' : 'Tag with'}</p>
         <div className="tag-list">
           {
-            (this.state.tagsLoading) ? <span><Loader /><div id='loading'>Fetching tag list...</div></span> : <span>{tagList}</span>
+            (this.state.tagsLoading) ? <span><Loader /><div className="placeholder">
+                          <div className="line"></div>
+                          <div className="line"></div>
+                          <div className="line"></div>
+                          <div className="line"></div>
+                        </div></span> : <span>{tagList}</span>
           }
         </div>
         <button onClick={this.handleSubmit} className="submit">+ Add</button>

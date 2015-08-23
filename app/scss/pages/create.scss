@@ -14,10 +14,14 @@
   .tag-list{
     margin-bottom: 50px;
     min-height: 100px;
-    #loading{
-      text-align: center;
-      padding: 10px;
-      animation: fade 1.5s linear infinite;
+    .placeholder{
+      .line{
+        display: inline-block;
+        height: 25px !important;
+        width: 100px !important;
+        margin: 30px 23px 0px 0px !important;
+        border-radius: 4px;
+      }
     }
     .tags{
       margin-right: 10px;
