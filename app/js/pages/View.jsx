@@ -6,7 +6,9 @@
 
 var React = require('react');
 var Loader = require('../components/Loader.jsx');
-
+var classnames = require('classnames');
+var page = require('page');
+var _ = require('underscore');
 
 var TagApi = require('../api/get-tag-list-api');
 var TagStore = require('../stores/get-tag-list-store');
@@ -18,31 +20,66 @@ var $ = require('jquery');
 
 var View = React.createClass({
   getInitialState: function() {
+    var selectedTags = this.props.details.info.filter.split('&');
     return {
       tagListLoading: true,
-      testCaseListLoading: true 
+      testCaseListLoading: true,
+      selectedTags:  selectedTags
     };
   },
   componentDidMount: function() {
-    
+    // debugger;
     TagStore.addChangeListener(this.onTagList);
     TestCaseListStore.addChangeListener(this.onTestCaseList);
+    TestCaseListApi.getTestCaseList(['all']);
     TagApi.getTagList();
-    TestCaseListApi.getTestCaseList();
   },
-  componentDidUpdate: function(prevProps, prevState) {
-    var _this = this;
-    $(window).scroll(function(){
-      var sT = $('body').scrollTop();
-      if(sT > 60){
-        $('.holder').addClass('fixed');
-      }else{
-         $('.holder').removeClass('fixed');
-      }
+  componentWillReceiveProps: function(nextProps) {
+    TestCaseListStore.clear();
+    var tags;
+    if(!this.state.selectedTags.length || this.state.selectedTags.indexOf('all') > -1)
+      tags = ['all']
+    else
+      tags = this.state.selectedTags;
+    TestCaseListApi.getTestCaseList(tags);
+    this.setState({
+      testCaseListLoading: true, 
     });
-
   },
+
   onTagClick: function(event){
+    var selected =event.target.getAttribute('value');
+    var index = this.state.selectedTags.indexOf(selected)
+    if( index > -1){
+      this.state.selectedTags.splice(index,1);
+      this.setState({
+        selectedTags:  this.state.selectedTags
+      });
+    }
+    else{
+      if(selected !== 'all'){
+        this.state.selectedTags.push(selected);
+        var index = this.state.selectedTags.indexOf('all');
+        if(index > -1){
+          this.state.selectedTags.splice(index,1);
+          this.setState({
+            selectedTags: this.state.selectedTags
+          });
+        }
+      }else{
+        this.state.selectedTags.push('all')
+      }
+    }
+    var index = this.state.selectedTags.indexOf('all');
+    if(this.state.selectedTags.length && index === -1){
+      var url = this.state.selectedTags.join('&');
+    }else{
+      var url = 'all';
+      this.setState({
+        selectedTags: ['all'] 
+      });
+    }
+      page('/view/'+url);
   },
   onTagList: function(){
     if(this.isMounted())
@@ -56,8 +93,6 @@ var View = React.createClass({
         testCaseListLoading: false 
       });
   },
-  componentWillUnmount: function() {
-  },
   renderCase: function(testcase,i){
     return <div className="row test-case" key={i}>
             <a href={'/teat-case/'+testcase.testId}>
@@ -70,48 +105,34 @@ var View = React.createClass({
   },
 
   render: function() {
-    if(this.state.tagListLoading || this.state.testCaseListLoading)
-      return <Loader />
     var _this = this;
-    var filter = this.props.details.info.filter.toLowerCase();
-    var tagListResponse = TagStore.getTagList();
-    var caseListResponse = TestCaseListStore.getTestCaseList();
+    if(this.state.tagListLoading)
+      return <Loader />
     var tagList = [];
+    var tagListResponse = TagStore.getTagList();
+    var isSelected = _this.state.selectedTags.indexOf('all') > -1 ? true : false; 
+    tagList.push(<a onClick={_this.onTagClick} className={classnames('all', {selected: isSelected})} value='all'>All</a>);
+    tagListResponse.tags.map(function(tag, i){
+      var tagClass = tag.replace(' ','-');
+      var isSelected = _this.state.selectedTags.indexOf(tag.toLowerCase()) > -1 ? true : false; 
+      tagList.push(
+        <a key={i} onClick={_this.onTagClick} className={classnames(tagClass.toLowerCase(), {selected: isSelected})} value={tag.toLowerCase()}>{tag.toLowerCase()}</a>
+        )
+    });
+    var caseListResponse = TestCaseListStore.getTestCaseList();
     var caseList = [];
-    var filteredCase = [];
-    if(filter === 'all'){
+    if(_.isEmpty(caseListResponse)){
+      var placeholder = <div className="placeholder">Loading...</div>
+      caseList.push(placeholder);
+    }else{
       caseListResponse.testcases.map(function(testcase, i){
-        caseList.push(_this.renderCase(testcase,i));
-      });
-    }
-    if(tagListResponse.tags.indexOf(filter)+1){
-      caseListResponse.testcases.map(function(testcase, i){
-        var flag = testcase.tags.indexOf(filter);
-        if(flag !== -1)
-          filteredCase.push(i);
-      });
-      caseListResponse.testcases.map(function(testcase, i){
-        var flag = filteredCase.indexOf(i);
-        if (flag !== -1) 
           caseList.push(_this.renderCase(testcase,i));
       });
     }
-    tagList.push(<a href={"/view/all"}>All</a>);
-    tagListResponse.tags.map(function(tag, i){
-      tagList.push(
-        <a key={i} onClick={_this.onTagClick} href={"/view/"+tag.toLowerCase()}>{tag.toLowerCase()}</a>
-        )
-    });
-     tagList = tagList.sort(function(a,b){
-      return a.length - b.length
-    });
-    <div className="row testcase">
-    </div>
-    if(caseList.length === 0)
-          caseList.push(<div className="no-match"><span>No match found...</span></div>);
 
     return (
       <div className="row view">
+      {this.state.testCaseListLoading && <Loader />}
         <div className="lr-8 md-8 sm-12 same-row">
           {caseList}
         </div>

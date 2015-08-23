@@ -1,16 +1,10 @@
 var path = require('path');
 var config = require('./setup-config');
 var Express = require('express');
-var promise = require('promise');
 var request = require('request');
 var param = require('node-qs-serialization').param;
 var app = Express();
 var remoteServer = config.host+':'+config.port;
-var bodyParser = require('body-parser')
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-}));
 app.use(Express.static('build'));
 
 app.get('/analytics/*',function(reg, res){

@@ -8,7 +8,9 @@ var $ = require('jquery');
 var getTestCaseList = require('../actions/get-test-case-list-action');
 
 module.exports = {
-  getTestCaseList: function(){
+  getTestCaseList: function(tags){
+    var param = $.param({tag: tags},true);
+    console.log('getting--> /?',param);
     var data =  {
       "totalnumber": 2,
       "testcases": [

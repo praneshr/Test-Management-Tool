@@ -26,11 +26,11 @@ var getTestCaseList = assign({}, EventEmitter.prototype, {
   },
 
   clear: function(){
-    TestCaseList = [];
+    TestCaseList = {};
   },
 
   setTestCaseList: function(data){
-    TestCaseList = data || [];
+    TestCaseList = data || {};
   },
 
   getTestCaseList: function(){
