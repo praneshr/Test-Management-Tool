@@ -98,5 +98,8 @@ module.exports = {
     setTimeout(function(){
       getTestCaseList.getTestCaseList(data);
     },3000);
+    $.get('/testcases?'+param)
+    .done()
+    .error();
   }
 };

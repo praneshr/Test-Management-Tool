@@ -3,6 +3,7 @@
 
 var React = require('react');
 var _ = require('underscore');
+var $ = require('jquery');
 
 var Header = React.createClass({
 

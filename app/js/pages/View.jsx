@@ -21,6 +21,7 @@ var $ = require('jquery');
 var View = React.createClass({
   getInitialState: function() {
     var selectedTags = this.props.details.info.filter.split('&');
+    $('body').css('overflow-y','hidden');
     return {
       tagListLoading: true,
       testCaseListLoading: true,
@@ -31,7 +32,7 @@ var View = React.createClass({
     // debugger;
     TagStore.addChangeListener(this.onTagList);
     TestCaseListStore.addChangeListener(this.onTestCaseList);
-    TestCaseListApi.getTestCaseList(['all']);
+    TestCaseListApi.getTestCaseList(this.props.details.info.filter.split('&'));
     TagApi.getTagList();
   },
   componentWillReceiveProps: function(nextProps) {
@@ -45,6 +46,7 @@ var View = React.createClass({
     this.setState({
       testCaseListLoading: true, 
     });
+    $('body').css('overflow-y','hidden');
   },
 
   onTagClick: function(event){
@@ -88,10 +90,12 @@ var View = React.createClass({
       });
   },
   onTestCaseList: function(){
-    if(this.isMounted())
+    if(this.isMounted()){
       this.setState({
         testCaseListLoading: false 
       });
+      $('body').css('overflow-y','initial');
+    }
   },
   renderCase: function(testcase,i){
     return <div className="row test-case" key={i}>
@@ -122,17 +126,24 @@ var View = React.createClass({
     var caseListResponse = TestCaseListStore.getTestCaseList();
     var caseList = [];
     if(_.isEmpty(caseListResponse)){
-      var placeholder = <div className="placeholder">Loading...</div>
-      caseList.push(placeholder);
+      var placeholder = <div className="placeholder">
+                          <div className="line"></div>
+                          <div className="line"></div>
+                          <div className="line"></div>
+                          <div className="line"></div>
+                          <hr/>
+                        </div>
+      for(var i=0; i< 7; i++){
+        caseList.push(placeholder);
+      }
     }else{
       caseListResponse.testcases.map(function(testcase, i){
           caseList.push(_this.renderCase(testcase,i));
       });
     }
-
     return (
       <div className="row view">
-      {this.state.testCaseListLoading && <Loader />}
+      {this.state.testCaseListLoading && " "}
         <div className="lr-8 md-8 sm-12 same-row">
           {caseList}
         </div>

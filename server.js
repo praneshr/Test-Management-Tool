@@ -40,6 +40,9 @@ app.post('/create',function(reg, res){
     }
   })
 });
+app.get('/testcases',function(reg, res){
+  // console.log(reg.originalUrl);
+});
 app.get('/*' , function(req, res){
   var file = path.join(__dirname, '/build', 'index.html');
   res.sendFile(file);
