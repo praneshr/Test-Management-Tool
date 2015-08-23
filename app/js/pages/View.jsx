@@ -29,7 +29,6 @@ var View = React.createClass({
     };
   },
   componentDidMount: function() {
-    // debugger;
     TagStore.addChangeListener(this.onTagList);
     TestCaseListStore.addChangeListener(this.onTestCaseList);
     TestCaseListApi.getTestCaseList(this.props.details.info.filter.split('&'));

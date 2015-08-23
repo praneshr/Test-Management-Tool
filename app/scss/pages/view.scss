@@ -133,8 +133,12 @@
         cursor: pointer;
         &.selected{
           color: $primary;
-          border: none;
-          border: 1px solid $primary;
+          border: 1px solid rgba($primary,.1);
+          background-color: rgba($primary,.1);
+          &:hover{
+            color: $primary;
+            border: 1px solid rgba($primary,.1);
+          }
         }
         &:hover{
           border-color: $primary;
