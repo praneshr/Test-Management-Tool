@@ -29,6 +29,9 @@ var DefaultLayout = require('../DefaultLayout.jsx');
   Page('/view/:filter',function(context){
     render({pageName: 'View', info: context.params});
   });
+  Page('/teat-case/:testId',function(context){
+    render({pageName: 'TestCaseDetails', info: context.params});
+  });
   Page('/create',function(context){
     render({pageName: 'Create', info: context.params});
   });

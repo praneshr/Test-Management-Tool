@@ -43,7 +43,7 @@ var View = React.createClass({
       tags = this.state.selectedTags;
     TestCaseListApi.getTestCaseList(tags);
     this.setState({
-      testCaseListLoading: true, 
+      testCaseListLoading: true,
     });
     $('body').css('overflow-y','hidden');
   },
@@ -77,7 +77,7 @@ var View = React.createClass({
     }else{
       var url = 'all';
       this.setState({
-        selectedTags: ['all'] 
+        selectedTags: ['all']
       });
     }
       page('/view/'+url);
@@ -85,13 +85,13 @@ var View = React.createClass({
   onTagList: function(){
     if(this.isMounted())
       this.setState({
-        tagListLoading: false 
+        tagListLoading: false
       });
   },
   onTestCaseList: function(){
     if(this.isMounted()){
       this.setState({
-        testCaseListLoading: false 
+        testCaseListLoading: false
       });
       $('body').css('overflow-y','initial');
     }
@@ -112,19 +112,19 @@ var View = React.createClass({
     if(this.state.tagListLoading)
       return <Loader />
     var tagList = [];
-    var tagListResponse = TagStore.getTagList();
-    var isSelected = _this.state.selectedTags.indexOf('all') > -1 ? true : false; 
+    var tagListResponse = JSON.parse(TagStore.getTagList());
+    var isSelected = _this.state.selectedTags.indexOf('all') > -1 ? true : false;
     tagList.push(<a onClick={_this.onTagClick} className={classnames('all', {selected: isSelected})} value='all'>All</a>);
     tagListResponse.tags.map(function(tag, i){
       var tagClass = tag.replace(' ','-');
-      var isSelected = _this.state.selectedTags.indexOf(tag.toLowerCase()) > -1 ? true : false; 
+      var isSelected = _this.state.selectedTags.indexOf(tag.toLowerCase()) > -1 ? true : false;
       tagList.push(
         <a key={i} onClick={_this.onTagClick} className={classnames(tagClass.toLowerCase(), {selected: isSelected})} value={tag.toLowerCase()}>{tag.toLowerCase()}</a>
         )
     });
-    var caseListResponse = TestCaseListStore.getTestCaseList();
+    var caseListResponse = JSON.parse(TestCaseListStore.getTestCaseList());
     var caseList = [];
-    if(_.isEmpty(caseListResponse)){
+    if(this.state.testCaseListLoading){
       var placeholder = <div className="placeholder">
                           <div className="line"></div>
                           <div className="line"></div>
@@ -136,13 +136,16 @@ var View = React.createClass({
         caseList.push(placeholder);
       }
     }else{
-      caseListResponse.testcases.map(function(testcase, i){
+      caseListResponse.map(function(testcase, i){
           caseList.push(_this.renderCase(testcase,i));
       });
     }
+    if(caseList.length === 0){
+      caseList.push(<p>No results found...</p>);
+    }
     return (
       <div className="row view">
-      {this.state.testCaseListLoading && " "}
+      {this.state.testCaseListLoading && <Loader />}
         <div className="lr-8 md-8 sm-12 same-row">
           {caseList}
         </div>

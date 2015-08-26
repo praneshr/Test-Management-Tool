@@ -71,13 +71,10 @@ var Create = React.createClass({
       });
   },
   onAddSuccess: function(){
-    var newTag = createTestCaseStore.getNewTestcase();
-    alert(newTag);
+    var newTag = JSON.parse(createTestCaseStore.getNewTestcase());
+    window.toast.show({message: newTag.message});
     this.setState({
       adding: false,
-      title: '',
-      description: '',
-      selectedTags: [],
     });
   },
   render: function() {
@@ -94,9 +91,9 @@ var Create = React.createClass({
         {this.state.adding && <Loader />}
         <h1><i className="material-icons add">add</i> New Test Case</h1>
         <p>Title</p>
-        <input data-type="input" type="text" onChange={this.onInputChange} value={this.state.title} placeholder="Give a title..."/>
+        <input data-type="input" type="text" onChange={this.onInputChange} value={this.state.title}/>
         <p>Description</p>
-        <textarea data-type="textarea"  onChange={this.onInputChange} value={this.state.description} placeholder="Clean description..."/>
+        <textarea data-type="textarea"  onChange={this.onInputChange} value={this.state.description}/>
         <p>{this.state.selectedTags.length ? 'Tagged with (' + this.state.selectedTags.length +')' : 'Tag with'}</p>
         <div className="tag-list">
           {

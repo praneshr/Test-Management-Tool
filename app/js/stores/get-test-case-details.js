@@ -10,9 +10,9 @@ var assign = require('object-assign');
 var _ = require('underscore');
 var ActionsList = require('../actions/action-list');
 
-var TestCaseList = '{}';
+var tagDetails = {};
 
-var getTestCaseList = assign({}, EventEmitter.prototype, {
+var getTestCaseDetails = assign({}, EventEmitter.prototype, {
   emitChange: function(){
     this.emit('change');
   },
@@ -24,17 +24,16 @@ var getTestCaseList = assign({}, EventEmitter.prototype, {
   removeChangeListener: function(callback) {
     this.removeListener('change', callback);
   },
-
   clear: function(){
-    TestCaseList = '{}';
+    tagDetails = [];
   },
 
-  setTestCaseList: function(data){
-    TestCaseList = data || '{}';
+  setTestCaseDetails: function(data){
+    tagDetails = data || [];
   },
 
-  getTestCaseList: function(){
-    return TestCaseList;
+  getTestCaseDetails: function(){
+    return tagDetails;
   },
 });
 
@@ -42,15 +41,15 @@ AppDispatcher.register(function(payload) {
   var action = payload.actionType;
 
   switch(action){
-    case ActionsList.GET_TEST_CASE_LIST:
-      getTestCaseList.setTestCaseList(payload.data);
+    case ActionsList.GET_TEST_CASE_DETAILS:
+      getTestCaseDetails.setTestCaseDetails(payload.data);
       break;
 
     default:
       return true;
   }
-  getTestCaseList.emitChange();
+  getTestCaseDetails.emitChange();
   return true;
 });
 
-module.exports = getTestCaseList;
+module.exports = getTestCaseDetails;

@@ -20,7 +20,7 @@ var data =  {
 };
 module.exports = {
   getTagList: function(){
-    getTagListActions.getTagList(data);
+      getTagListActions.getTagList(JSON.stringify(data));
     // $.get('/tags')
     // .done(function(data){
     // })

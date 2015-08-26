@@ -6,10 +6,11 @@
 
 var React = require('react');
 var Header = require('./components/Header.jsx');
+var Toast = require('the-vision').components.Toast;
 
 var DefaultLayout = React.createClass({
   componentDidMount: function() {
-    
+
   },
 
   render: function() {
@@ -22,6 +23,7 @@ var DefaultLayout = React.createClass({
         <Header highlight={selectedPage}/>
           <RenderPage details={this.props.info}/>
         </div>
+        <Toast/>
       </div>
     );
   }

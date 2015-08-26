@@ -1,6 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Work+Sans:400,100);
 @import './colors.scss';
 
+@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss';
+@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/_alerts.scss';
+@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_alerts.scss';
 @import '../../node_modules/frame-ui/css/sass/_variables.scss';
 @import './variables.scss';
 @import '../../node_modules/frame-ui/css/sass/_render-engine.scss';
@@ -12,11 +15,42 @@
 @import './pages/view.scss';
 @import './pages/home.scss';
 @import './pages/create.scss';
+@import './pages/test-case-details.scss';
 
 
 .frame{
   color: $grey800;
   font-size: 14px;
+  .toast-container{
+    position: fixed;
+    bottom: 20px;
+    width: 300px;
+    transition: all 0.5s cubic-bezier(.55,0,.1,1);
+    opacity: 1;
+    z-index: 1040;
+    left: 20px;
+    .alert-success{
+      background-color: $grey800;
+      color: $white;
+      border: none;
+      border-left: 5px solid $primary;
+    }
+    &.closed{
+      opacity: 0;
+      bottom: -100px;
+    }
+    .toast{
+      width: 300px;
+      position: relative;
+      margin-bottom: 0;
+      .close{
+        padding-left: 20px;
+        float: right;
+        cursor: pointer;
+      }
+    }
+  }
+
   ::-moz-selection { /* Code for Firefox */
     color: $white;
     background: rgba($primary,.5)
@@ -31,15 +65,15 @@
   }
 
   :-moz-placeholder { /* Firefox 18- */
-    color: $grey400;  
+    color: $grey400;
   }
 
   ::-moz-placeholder {  /* Firefox 19+ */
-    color: $grey400;  
+    color: $grey400;
   }
 
-  :-ms-input-placeholder {  
-    color: $grey400;  
+  :-ms-input-placeholder {
+    color: $grey400;
   }
   .placeholder{
     position: relative;
@@ -123,6 +157,7 @@
   }
   input[type = 'text'],textarea{
     display: block;
+    font-size: 14px;
     margin-top: 10px;
     font-family: inherit;
     border: none;
@@ -163,7 +198,7 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
@@ -172,7 +207,7 @@
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: $purple600; 
+  background: $purple600;
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: $grey100;

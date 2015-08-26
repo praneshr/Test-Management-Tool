@@ -5,6 +5,11 @@ var request = require('request');
 var param = require('node-qs-serialization').param;
 var app = Express();
 var remoteServer = config.host+':'+config.port;
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(Express.static('build'));
 
 app.get('/analytics/*',function(reg, res){
@@ -41,8 +46,32 @@ app.post('/create',function(reg, res){
   })
 });
 app.get('/testcases',function(reg, res){
-  // console.log(reg.originalUrl);
+  var url = reg.originalUrl.split('?')[1];
+  if(url === 'alltestcases')
+    url = '/alltestcases';
+  else
+    url = '/testcases?'+url
+  request(remoteServer+config.testCaseList+url,function(error, response, body){
+    if (!error && response.statusCode == 200) {
+      res.send(body)
+    }else{
+      console.log('error');
+    }
+  })
 });
+
+app.get('/details',function(reg, res){
+  var param = reg.query.testCaseId;
+  request(remoteServer+config.testCaseDetails+param,function(error, response, body){
+    if (!error && response.statusCode == 200) {
+      res.send(body)
+    }else{
+      console.log('error');
+    }
+  })
+});
+
+
 app.get('/*' , function(req, res){
   var file = path.join(__dirname, '/build', 'index.html');
   res.sendFile(file);

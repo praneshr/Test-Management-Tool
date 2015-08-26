@@ -32,11 +32,18 @@
       display: inline-block;
       transition: all .1s linear;
       cursor: pointer;
-      &:hover,
+      &:hover{
+        border-color: $primary;
+        color: $primary;
+      }
       &.selected{
         color: $primary;
-        border: none;
-        border: 1px solid $primary;
+        border: 1px solid rgba($primary,.1);
+        background-color: rgba($primary,.1);
+        &:hover{
+          color: $primary;
+          border: 1px solid rgba($primary,.1);
+        }
       }
     }
   }

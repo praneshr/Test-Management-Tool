@@ -4,5 +4,7 @@ module.exports ={
 
   getTags: '/testmanagement/tags',
   getAnalytics: '/testmanagement/analytics',
-  createTestCase: '/testmanagement/testcase/create'
+  createTestCase: '/testmanagement/testcase/create',
+  testCaseList: '/testmanagement',
+  testCaseDetails: '/testmanagement/testcase/view?testID='
 }

@@ -42,11 +42,11 @@ var IxInternetPortal = {
     },
     plugins: [
     new ExtractTextPlugin('../css/main.css'),
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        }
-    })
+    // new webpack.optimize.UglifyJsPlugin({
+    //     compress: {
+    //         warnings: false
+    //     }
+    // })
     ]
 };
 

@@ -23,6 +23,9 @@ var AppDispatcher = assign(new Flux.Dispatcher(), {
   },
   createTestcase: function(action){
     this.dispatch(action);
+  },
+  getTestCaseDetails: function(action){
+    this.dispatch(action);
   }
 });
 
