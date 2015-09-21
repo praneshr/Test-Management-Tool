@@ -14,6 +14,8 @@ var entries = [
 ]
 .concat(glob.sync('./app/images/*'));
 
+
+
 var IxInternetPortal = {
     entry: entries,
     module: {
