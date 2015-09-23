@@ -47,6 +47,21 @@ app.post('/create',function(reg, res){
     }
   })
 });
+app.post('/update',function(reg, res){
+  var tag = decodeURI(param({tag:reg.body.tag})).split('[]').join('');
+  var options = {
+    url: remoteServer+config.updateTestCase,
+    form: "testId="+reg.body.testId+"&testTitle="+ reg.body.title + "&testDescription="+ reg.body.description +"&jiraId="+reg.body.jiraId+"&"+tag
+  };
+  console.log(options);
+  request.post(options,function(error, response, body){
+    if (!error && response.statusCode == 200) {
+      res.send(body)
+    }else{
+      console.log('error');
+    }
+  })
+});
 app.get('/testcases',function(reg, res){
   var url = reg.originalUrl.split('?')[1];
   if(url === 'alltestcases')

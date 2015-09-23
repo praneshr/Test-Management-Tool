@@ -2,12 +2,14 @@ var React = require('react/addons');
 var _ = require('underscore');
 var Loader = require('../components/Loader.jsx');
 var classnames = require('classnames');
+var Page = require('page');
 
 var TagApi = require('../api/get-tag-list-api');
 var TagStore = require('../stores/get-tag-list-store');
 
 var createTestCaseStore = require('../stores/create-testcase-store');
 var createTestApi = require('../api/create-testcase-api');
+
 
 var Create = React.createClass({
   getInitialState: function() {
@@ -72,10 +74,11 @@ var Create = React.createClass({
   },
   onAddSuccess: function(){
     var newTag = JSON.parse(createTestCaseStore.getNewTestcase());
-    window.toast.show({message: newTag.message});
+    window.toast.autoHide({message: newTag.message});
     this.setState({
       adding: false,
     });
+    Page('/view/all');
   },
   render: function() {
     var tagList = [];

@@ -2,6 +2,7 @@ var React = require('react');
 var Loader = require('../components/Loader.jsx');
 var classnames = require('classnames');
 var _ = require('underscore');
+var Page = require('page');
 
 var TagApi = require('../api/get-tag-list-api');
 var TagStore = require('../stores/get-tag-list-store');
@@ -9,6 +10,8 @@ var TagStore = require('../stores/get-tag-list-store');
 var TestCaseDetailsApi = require('../api/get-test-case-details');
 var TestCaseDetailsStore = require('../stores/get-test-case-details');
 
+var UpdateTestCaseStore = require('../stores/update-test-case');
+var UpdateTestCaseApi = require('../api/update-test-case');
 
 var TestCaseDetails = React.createClass({
   getInitialState: function() {
@@ -26,6 +29,7 @@ var TestCaseDetails = React.createClass({
   componentDidMount: function() {
     TagStore.addChangeListener(this.onTagList);
     TestCaseDetailsStore.addChangeListener(this.onTestCaseDetails);
+    UpdateTestCaseStore.addChangeListener(this.onUpdate);
     TagApi.getTagList();
     TestCaseDetailsApi.getTestCaseDetails(this.state.testCaseID);
   },
@@ -127,8 +131,12 @@ var TestCaseDetails = React.createClass({
       React.findDOMNode(this.refs.jira).blur();
     }
   },
+   onUpdate: function(){
+    window.toast.autoHide({message: "TestCase "+this.state.testCaseID+" updated"});
+    Page('/view/all');
+  },
   handleUpdate: function(){
-    // debugger;
+    UpdateTestCaseApi.updateTestCase(this.state);
   },
   render: function() {
     if(this.state.tagsLoading || this.state.detailsLoading)

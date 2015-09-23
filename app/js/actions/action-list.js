@@ -7,5 +7,6 @@ module.exports = keyMirror({
   GET_TEST_CASE_LIST: null,
   GET_ANALYTICS: null,
   CREATE_TESTCASE: null,
-  GET_TEST_CASE_DETAILS: null
+  GET_TEST_CASE_DETAILS: null,
+  UPDATE_CASE_TEST: null
 });
