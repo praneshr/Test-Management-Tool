@@ -1,9 +1,12 @@
 .main{
   .percentage{
     font-size: 14px;
-    color: $primary;
+    color: $green500;
     position: relative;
     top: -3px;
+    &.danger{
+      color: $red500;
+    }
   }
   .with-love{
     text-align: center;

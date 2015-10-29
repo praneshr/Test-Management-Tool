@@ -1,5 +1,6 @@
 var React = require('react');
 var Loader = require('../components/Loader.jsx');
+var classnames = require('classnames');
 
 var AnalyticsStore = require('../stores/get-analytics-store');
 var AnalyticsApi = require('../api/get-analytics-api');
@@ -62,12 +63,12 @@ var Index = React.createClass({
     var passed = 00;
     var failed = 00;
     var notRun = 00;
-    var percentage = '0%';
+    var percentage = 0;
     if(!this.state.statsLoading){
       var stats = JSON.parse(AnalyticsStore.getAnalytics());
       stats = stats.projects[0];
       totalTC = stats.totalCases;
-      percentage = stats.passPercentage === 'NaN'? '0.00%' : stats.passPercentage.toFixed(2) + '%';
+      percentage = stats.passPercentage === 'NaN'? 0 : stats.passPercentage.toFixed(2);
       notRun = stats.notrun;
       passed = stats.passed;
       failed = stats.failed;
@@ -108,7 +109,7 @@ var Index = React.createClass({
             <div className="row row-2">
               <div className="lr-4 md-4 sm-4 outer same-row">
                 <div className="body">
-                  <p className="title">Passed <span className="percentage">({percentage})</span></p>
+                  <p className="title">Passed <span className={classnames("percentage",{danger: percentage < 70})}>({percentage + '%'})</span></p>
                   <p className="number">{passed}</p>
                 </div>
               </div>
