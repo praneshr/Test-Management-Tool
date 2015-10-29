@@ -98,7 +98,7 @@ var View = React.createClass({
   },
   renderCase: function(testcase,i){
     return <div className="row test-case" key={i}>
-            <a href={'/teat-case/'+testcase.testId}>
+            <a href={'/test-case/'+testcase.testId}>
               <div className="lr-12 sm-12 md-12 id">{testcase.testId}</div>
               <div className="lr-12 sm-12 md-12 title">{testcase.testTitle}</div>
             </a>
