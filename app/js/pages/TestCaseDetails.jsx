@@ -47,11 +47,13 @@ var TestCaseDetails = React.createClass({
     }
   },
   onTagList: function(){
+    this.isMounted() &&
     this.setState({
       tagsLoading: false
     });
   },
   onTestCaseDetails: function(){
+    this.isMounted() &&
     this.setState({
       detailsLoading: false
     });
@@ -138,6 +140,10 @@ var TestCaseDetails = React.createClass({
   handleUpdate: function(){
     UpdateTestCaseApi.updateTestCase(this.state);
   },
+  goBack: function() {
+    history.back();
+  },
+
   render: function() {
     if(this.state.tagsLoading || this.state.detailsLoading)
       return (<span>
@@ -161,7 +167,7 @@ var TestCaseDetails = React.createClass({
     }
     return (
       <div className="test-case-details">
-        <i className="material-icons back">keyboard_arrow_left</i><h2 id="title">Test Case: {this.state.testCaseID}</h2>
+        <i className="material-icons back" onClick={this.goBack}>keyboard_arrow_left</i><h2 id="title">Test Case: {this.state.testCaseID}</h2>
         <p className="topic">Title</p>
         <div className="title-holder">
           <input type="text" tabIndex="-1" className={classnames('title-input', {show: this.state.showInput.titleInput})} value={this.state.title} onChange={this.inputChange} data-value="title" onBlur={this.inputBlur} onKeyPress={this.onEnter} ref="title"/>
