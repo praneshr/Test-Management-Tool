@@ -12,6 +12,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(Express.static('build'));
 
+
+var port = process.env.PORT || 8080;
+
 app.get('/analytics/*',function(reg, res){
   var param = reg.query.projectName;
   request(remoteServer+config.getAnalytics+'?project='+param,function(error, response, body){
@@ -97,6 +100,6 @@ app.get('/*' , function(req, res){
 
 
 
-app.listen(9090, function () {
-  console.log('http://localhost:9090');
+app.listen(port, function () {
+  console.log('http://localhost:'+port);
 });
