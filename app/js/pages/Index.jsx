@@ -39,7 +39,8 @@ var Index = React.createClass({
   onSelectChnage: function(event){
     var data = event.target.value;
     this.setState({
-      project: data
+      project: data,
+      statsLoading: true
     });
     AnalyticsApi.getAnalytics(data);
   },
@@ -66,7 +67,7 @@ var Index = React.createClass({
       var stats = JSON.parse(AnalyticsStore.getAnalytics());
       stats = stats.projects[0];
       totalTC = stats.totalCases;
-      percentage = stats.passPercentage.toFixed(2) + '%';
+      percentage = stats.passPercentage === 'NaN'? '0.00%' : stats.passPercentage.toFixed(2) + '%';
       notRun = stats.notrun;
       passed = stats.passed;
       failed = stats.failed;
@@ -81,6 +82,7 @@ var Index = React.createClass({
     });
     return (
       <div className="main">
+      {this.state.statsLoading && <Loader/>}
       <div className="bgi" >
         <h1>Well, Hello There!</h1>
       </div>
