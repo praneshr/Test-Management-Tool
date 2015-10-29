@@ -1,4 +1,34 @@
 .main{
+  .percentage{
+    font-size: 14px;
+    color: $primary;
+    position: relative;
+    top: -3px;
+  }
+  .with-love{
+    text-align: center;
+    margin-top: 100px;
+    font-family: 'Bad Script', cursive;
+    font-size: 16px;
+    .love{
+      display: block;
+      text-align: center;
+      position: relative;
+      left: 50%;
+      margin-left: -7px;
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+    a{
+      color: $primary;
+      text-decoration: none;
+      &:hover,&:active,&:visited{
+        text-decoration: none;
+        color: $primary;
+      }
+    }
+
+  }
   .bgi{
     background-image: url(/img/bg.jpg);
     background-position: center 555px;

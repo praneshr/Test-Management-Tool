@@ -66,7 +66,7 @@ var Index = React.createClass({
       var stats = JSON.parse(AnalyticsStore.getAnalytics());
       stats = stats.projects[0];
       totalTC = stats.totalCases;
-      percentage = stats.passPercentage + '%';
+      percentage = stats.passPercentage.toFixed(2) + '%';
       notRun = stats.notrun;
       passed = stats.passed;
       failed = stats.failed;
@@ -106,7 +106,7 @@ var Index = React.createClass({
             <div className="row row-2">
               <div className="lr-4 md-4 sm-4 outer same-row">
                 <div className="body">
-                  <p className="title">Passed</p>
+                  <p className="title">Passed <span className="percentage">({percentage})</span></p>
                   <p className="number">{passed}</p>
                 </div>
               </div>
@@ -126,6 +126,7 @@ var Index = React.createClass({
           </div>
           <p id="info">*click on the dropdown button to see the project list</p>
         </div>
+        <div className="with-love"><div className="love material-icons">favorite_border</div>Made with Love at <a href="http://indix.com">Indix</a></div>
       </div>
     );
   }
