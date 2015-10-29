@@ -38,6 +38,9 @@ var Header = React.createClass({
   render: function() {
     return (
       <div className="header" >
+        <a href="/home" className="logo">
+          <span>ixcase</span>
+        </a>
         <div className="frame" ref='parent'>
           <a href="/home" value="index">Home</a>
           <a href="/view" value="view">View all test cases</a>

@@ -22,6 +22,27 @@
 .frame{
   color: $grey800;
   font-size: 14px;
+  .logo{
+    position: fixed;
+    font-size: 25px;
+    text-decoration: none;
+    font-weight: 100;
+    top: 0;
+    left: 0;
+    font-family: 'Work Sans', sans-serif;
+    background: $primary;
+    padding: 16px 16px;
+    box-sizing: border-box;
+    &:hover{
+      color: $white;
+    }
+    &:active{
+      color: $white;
+    }
+    &:visited{
+      color: $white;
+    }
+  }
   .toast-container{
     position: fixed;
     bottom: 20px;
