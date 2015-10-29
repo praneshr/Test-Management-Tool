@@ -10,10 +10,11 @@ var updateTestCaseAction = require('../actions/update-test-case-action.js');
 module.exports = {
   updateTestCase: function(data){
     var req = {};
-    req.testId = data.testCaseID || null;
-    req.title = data.title || null;
-    req.description = data.description || null;
-    req.jiraId = data.jira || null;
+    debugger;
+    req.testId = data.testCaseID || 'none';
+    req.title = data.title || 'none';
+    req.description = data.description || 'none';
+    req.jiraId = data.jira || 'none';
     req.tag = [];
     data.selectedTags.map(function(tag,i){req.tag.push(tag)});
     req = $.param(req,true);
