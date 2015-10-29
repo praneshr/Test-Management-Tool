@@ -4,7 +4,7 @@ var Express = require('express');
 var request = require('request');
 var param = require('node-qs-serialization').param;
 var app = Express();
-var remoteServer = config.host+':'+config.port;
+var remoteServer = config.host;
 var bodyParser = require('body-parser')
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({

@@ -1,5 +1,5 @@
 module.exports ={
-  host: 'http://192.168.0.46',
+  host: 'http://tacamato.herokuapp.com',
   port: '8080',
 
   getTags: '/testmanagement/tags',
