@@ -19,7 +19,7 @@ module.exports = {
     data.selectedTags.map(function(tag,i){req.tag.push(tag)});
     req = $.param(req,true);
     console.log(req);
-    $.post('/update/',req)
+    $.post('/update/',encodeURI(req))
       .done(function(data){
         updateTestCaseAction.updateTestCase(data);
       })

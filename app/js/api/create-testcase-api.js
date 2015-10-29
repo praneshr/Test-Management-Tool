@@ -16,7 +16,8 @@ module.exports = {
     data.tags.map(function(tag,i){req.tag.push(tag)});
     req = $.param(req,true)
     console.log(req);
-    $.post('/create/',req)
+    debugger;
+    $.post('/create/',encodeURI(req))
       .done(function(data){
         createTeatcaseActions.createTestcase(data);
       })
