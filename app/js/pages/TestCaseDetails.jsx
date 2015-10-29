@@ -135,10 +135,16 @@ var TestCaseDetails = React.createClass({
   },
    onUpdate: function(){
     window.toast.autoHide({message: "TestCase "+this.state.testCaseID+" updated"});
+    this.setState({
+      adding: false,
+    });
     Page('/view/all');
   },
   handleUpdate: function(){
     UpdateTestCaseApi.updateTestCase(this.state);
+    this.setState({
+      adding: true
+    });
   },
   goBack: function() {
     history.back();
@@ -166,7 +172,7 @@ var TestCaseDetails = React.createClass({
       });
     }
     return (
-      <div className="test-case-details">
+      <div className={classnames("test-case-details",{add:this.state.adding})}>
         <i className="material-icons back" onClick={this.goBack}>keyboard_arrow_left</i><h2 id="title">Test Case: {this.state.testCaseID}</h2>
         <p className="topic">Title</p>
         <div className="title-holder">

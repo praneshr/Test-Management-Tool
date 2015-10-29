@@ -99,32 +99,40 @@ var Index = React.createClass({
           </div>
           <div className="stats">
             <div className="row">
+            <a href={this.state.project === 'all' ? '/view/all' : '/view/'+this.state.project}>
               <div className="lr-12 md-12 sm-12 outer bottom-border">
                 <div className="body">
                   <p className="title">Total test cases</p>
                   <p className="number">{totalTC}</p>
                 </div>
               </div>
+              </a>
             </div>
             <div className="row row-2">
+              <a href={this.state.project === 'all' ? '/view/passed' : '/view/'+this.state.project+'&passed'}>
               <div className="lr-4 md-4 sm-4 outer same-row">
                 <div className="body">
                   <p className="title">Passed <span className={classnames("percentage",{danger: percentage < 70})}>({percentage + '%'})</span></p>
                   <p className="number">{passed}</p>
                 </div>
               </div>
+              </a>
+              <a href={this.state.project === 'all' ? '/view/notrun' : '/view/'+this.state.project+'&notrun'}>
               <div className="lr-4 md-4 sm-4 outer same-row">
                 <div className="body">
                   <p className="title">Not-run</p>
                   <p className="number">{notRun}</p>
                 </div>
               </div>
+              </a>
+              <a href={this.state.project === 'all' ? '/view/failed' : '/view/'+this.state.project+'&failed'}>
               <div className="lr-4 md-4 sm-4 outer same-row">
                 <div className="body">
                   <p className="title">Failed</p>
                   <p className="number">{failed}</p>
                 </div>
               </div>
+              </a>
             </div>
           </div>
           <p id="info">*click on the dropdown button to see the project list</p>

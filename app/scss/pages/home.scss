@@ -1,4 +1,18 @@
 .main{
+  .body{
+    transition: all .1s linear;
+    &:hover{
+      background-color: $grey100;
+    }
+  }
+  a{
+      color: $primary;
+      text-decoration: none;
+      &:hover,&:active,&:visited{
+        text-decoration: none;
+        color: $primary;
+      }
+    }
   .percentage{
     font-size: 14px;
     color: $green500;
@@ -22,15 +36,6 @@
       margin-bottom: 10px;
       opacity: 0.8;
     }
-    a{
-      color: $primary;
-      text-decoration: none;
-      &:hover,&:active,&:visited{
-        text-decoration: none;
-        color: $primary;
-      }
-    }
-
   }
   .bgi{
     background-image: url(/img/bg.jpg);
@@ -97,6 +102,7 @@
           .title{
             font-size: 24px;
             font-weight: 100;
+            color: #424242;
           }
           .number{
             font-size: 30px;

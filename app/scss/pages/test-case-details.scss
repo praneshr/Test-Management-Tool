@@ -1,4 +1,8 @@
 .test-case-details{
+  transition:  all .2s ease;
+  &.add{
+    opacity: .2;
+  }
   .back{
     font-size: 30px !important;
     position: relative;
