@@ -51,5 +51,8 @@
   },
   "keywords": [
     "test"
-  ]
+  ],
+  "engines": {
+    "node": "0.12.7"
+  }
 }
