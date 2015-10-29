@@ -7,7 +7,7 @@ var Page = require('page');
 var TagApi = require('../api/get-tag-list-api');
 var TagStore = require('../stores/get-tag-list-store');
 
-var createTestCaseStore = require('../stores/create-testcase-store');
+var createTestCaseStore = require('../stores/create-Testcase-store');
 var createTestApi = require('../api/create-testcase-api');
 
 
