@@ -141,7 +141,7 @@ var View = React.createClass({
       });
     }
     if(caseList.length === 0){
-      caseList.push(<p>No results found...</p>);
+      caseList.push(<div className="no-result"></div>);
     }
     return (
       <div className="row view">
